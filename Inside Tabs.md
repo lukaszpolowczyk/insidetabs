@@ -10,4 +10,4 @@ Nazewictowo:
 
 Aktualnie jedna instancja strony jest powiązana z jedną kartą przeglądarki internetowej.
 
-![One tab - one Instance od website(onetaboneinstance.png)
+![One tab - one Instance od website(images/onetaboneinstance.png)
