@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>Inside Tabs API Presentation</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+</head>
+<body>
+	
+	<div class="browser-window">
+		<div class="browser-bars">
+			<div class="browser-tabs">
+				<div style="margin-right: 20px"> Browser tabs: </div>
+				<div class="tab">
+					<input class="tab-input" checked="" type="radio" name="tab" url="https://it-simple.com" id="tab1" reset for-view="1"             ><label class="tab-label" for="tab1">Simple Text</label>
+				</div>
+				<div class="tab">
+						<input class="tab-input" type="radio" name="tab" url="https://it-gallery.com/3" id="tab2" reset for-view="2" context="3" ><label class="tab-label" for="tab2">Gallery - 3</label>
+					
+				</div>
+				<div class="tab">
+					<input class="tab-input" type="radio" name="tab" url="https://it-gallery.com/4" id="tab3" reset for-view="2" context="4" ><label class="tab-label" for="tab3">Gallery - 4</label>
+				</div>
+				<div class="tab">
+						<input class="tab-input" type="radio" name="tab" url="https://it-withsidebar.com" id="tab4" reset for-view="3"             ><label class="tab-label" for="tab4">Text with Sidebar</label>
+				</div>
+				
+			</div>
+			<div>View URL: <span class="tab-url"></span></div>
+		</div>
+		<div class="views">
+			<div class="view" view-id="1">
+				<div class="visible-text">Visible view</div>
+				<div class="background-text">In background view</div>
+				<img class="view-img" src="placeholders/placeholder-simple-text.png" alt="" srcset="">
+				<div class="description"></div>
+			</div>
+			<div class="view" view-id="2">
+				<div class="visible-text">Visible view</div>
+				<div class="background-text">In background view</div>
+				<map name="thumbs">
+					<area class="thumb gall1" number="1" shape="rect" coords="25, 153, 63, 189" title="Click to switch image">
+					<area class="thumb gall2" number="2" shape="rect" coords="77, 153, 115, 189" title="Click to switch image">
+					<area class="thumb gall3" number="3" shape="rect" coords="136, 153, 174, 189" title="Click to switch image">
+					<area class="thumb gall4" number="4" shape="rect" coords="189, 153, 227, 189" title="Click to switch image">
+					</map>
+				<img class="view-img" usemap="#thumbs" src="placeholders/placeholder-gallery-selected-3.png" alt="" srcset="">
+				
+				<div class="description">
+				</div>
+			</div>
+			<div class="view" view-id="3">
+				<div class="visible-text">Visible view</div>
+				<div class="background-text">In background view</div>
+				<img class="view-img" src="placeholders/placeholder-sidebar-and-text.png" alt="" srcset="">
+				<div class="description"></div>
+			</div>
+		</div>
+	</div>
+	<div class="state-description">
+		One view for two tabs.<br/>
+		Second view is common for two tabs.<br/>
+		The two tabs refer to one instance (view, DOM, CSSOM etc.) of the page.
+	</div>
+	
+	<script>
+		let inputEl = document.querySelector(`.tab-input[id="tab1"]`);
+		document.querySelector(`.view[view-id="1"]`).setAttribute("active", true);
+		inputEl.checked = true;
+		document.querySelector(".tab-url").textContent = inputEl.getAttribute("url");
+		
+		
+		const browserTabsEl = document.querySelector(".browser-tabs");
+		browserTabsEl.addEventListener("mousedown", ({target})=>{
+			if (!target.classList.contains("tab-label")) {return false};
+			const inputId = target.getAttribute("for");
+			inputEl = document.querySelector(`#${inputId}`);
+			for (const viewEl of Array.from(document.querySelectorAll(".view"))) {
+				
+				viewEl.setAttribute("active", false);
+			}
+			
+			const activeViewEl = document.querySelector(`.view[view-id="${inputEl.getAttribute("for-view")}"]`);
+			
+			activeViewEl.setAttribute("active", true);
+			document.querySelector(".tab-url").textContent = inputEl.getAttribute("url");
+			
+			if (inputEl.id === "tab2" || inputEl.id === "tab3") {
+				activeViewEl.querySelector("img").src = `placeholders/placeholder-gallery-selected-${inputEl.getAttribute("context")}.png`;
+			}
+		});
+		
+		const mapEl = document.querySelector("map");
+		mapEl.addEventListener("mousedown", ({target})=>{
+			const number = target.getAttribute("number");
+			
+			inputEl.nextElementSibling.textContent = `Gallery - ${number}`;
+			inputEl.setAttribute("context", `${number}`);
+			const activeViewEl = document.querySelector(`.view[view-id="${inputEl.getAttribute("for-view")}"]`);
+			activeViewEl.querySelector("img").src = `placeholders/placeholder-gallery-selected-${inputEl.getAttribute("context")}.png`;
+			console.log("number", number);
+		});
+	</script>
+</body>
+</html>

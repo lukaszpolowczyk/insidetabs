@@ -1,0 +1,34 @@
+co z tytułem, gdy klikam link? przecież link nie posiada tytułu.
+podwójny callback?
+
+Wspólny widok,DOM i CSSOM dla wielu kart.
+Jeden wspólny widok, DOM i CSSOM dostępny z wielu kart.
+Wiele kart ma dostęp do jednego wspólnego widoku, DOM i CSSOM.
+
+Kliknięcie dowolnej z tych kart, otwiera ten sam widok plus odpala skrypt bliźniaczy do `onpopstate`, czyli `onrownoleglystate`.
+
+Otwieranie nowego kontekstu/równoległegostanu:
+1. Nasłuchiwany event `onnewrownoleglystan` przechwytuje kliknięty link, wpisany adres lub temu podobne. Musi być nasłuch, bo nową kartę można otwierać na różne sposoby. Nie można tego zrobić tak jak z linkiem i przejęciem onclick i wykonaniem pushState().
+2. I wewnątrz callbacka można wybrać czy:
+  * zablokować ładowanie strony i dodać nasłuch onrownoleglystate dla tej karty, za pomocą event.createState(title, ~~address~~, context); (nie wiem czy musi być przyczepione do event), i chyba preventDefault, żeby nie załadowała się normalnie strona. Zwróć uwagę - ten skrypt wykonuje się przed faktycznym otwarciem nowej karty, i ustawia przeglądarkę, jak ma się zachować i zacząć zachowywać nowo otwarta karta.
+  * otworzyć ten stan-adres normalnie, pozostawiając callback pusty, bez wywołania createState(). w zasadzie createState() powinien sam działać jak preventDefault(). chyba nie ma sytuacji, gdy potrzebne będzie rozdzielne wywołanie tego? albo wywołanie tylko jednego a drugiego nie?
+3. Na podstawie zwracanego z parametru event adresu - jedynie adres jest kontekstem nowo otwartej karty, bo innych informacji nie da się przekazać. Oraz w event będzie też informacja o źródle otwarcia typu: link z tej samej domeny, link z obcej domeny, wpisany w pasek adresu, otwarty z zakładek, zewnętrznego programu. No, i teraz na prawdę więcej niedostanie.
+4. jeśli został wywołany createState, to od teraz kliknięcie w tę kartę wywołuje callback przyczepiony do eventu onrownoleglystate.
+5. W evencie onrownoleglystate zwracany jest już: tytuł, adres, obiekt context (w nim można przekazać źródło otwarcia, albo dodać do tego osobny parametr). W tym evencie można już wywołać już odpowiedni skrypt, który zmienia stan tego wspólnego widoku.
+
+Osobny onnewrownoleglystan jest potrzebny, żeby przypisać tytuł, może favicon-ę? do nowego równoległego stanu i żeby móc zadecydować, czy otworzyć kartę normalnie czy dla wspólnego widoku.
+
+Wspólny widok jest tylko jeden. Więc albo karta jest we wspólnym widoku, albo ma własny widok i nie może utworzyć nowego wspólnego widoku dla tej domeny. Ale taka karta wywołująca, może wejść do wspólnego widoku i może otworzyć nową kartę w tym pierwotnym wspólnym widoku! Do wchodzenia osobnej karty do wspólnego widoku potrzeba dodatkowego API. Może navigator.joinToWspolnyWidok(title, address, context); gdzie address musi być adresem otwartej karty(?) (a co jak jest więcej z tym samym adresem?!) w kontext przekazujesz wszystko co potrzeba, tak samo jak dla createState. Ta funkcja odpala już w tle(?) callback, a aktualna karta się opróżnia, i zostaje zastąpiona wspólnym widokiem z odpalonym już skryptem tego stanu-adresu.
+Nie wyobrażam sobie jak można by tworzyć kilka równoległych wspólnych widoków, czy to by nie kolidowało i nie wymagało zmian w API?
+
+Co jak wiele kart z tym samym adresem? traktować jak jedno? czy może pozwolić na różnice w stanie, mimo tego samego adresu? chyba lepiej pozwolić na różnice (chociażby stan przewinięcia strony, zaznaczenie tekstu - ale to dynamicznie zmieniane przez przeglądarkę a nie koniecznie przez dewelopera(chociaż może)).
+
+Dodatkowy temat: alert() i prompt() przyciąga do karty, gdy się wywoła a karta jest w tle. Powstaje pytanie - do której karty wspólnego widoku ma się przyciągnać? wygląda, jakby trzeba było zmodyfikować alert, żeby móc wybrać kartę wspólnego widoku.
+Rozwiązanie: domyślnie, gdy wszystkie karty wspólnego widoku są w tle, to kartą której dotyczy alert, window.title itd., jest karta ostatnio aktywna z tych kart ze wspólnym widokiem.
+Ale można ustawić navigator.wspólnyAktualnyStateInBackground(address|contextob??), który po prostu ustawia jaki ma być ten kontekst wspólnego widoku, w tle. ta funkcja może być odpalana przez dewelopera przy od-focus-owaniu kart wspólnego widoku. Ale można to zrobić w dowolnym momencie, gdy żadna z kart wspólnego widoku nie jest aktywna (bo gdy jest, musiało by to przełączać kartę, a tego nie chcemy dla tej akcji, albo by przełączało się gdy jestem na osobnym widoku. a tego też nie chcemy w tym przypadku). Kliknięcie w jedną z kart wspólnego kontekstu zmienia też wspólnyStateInBackground, bo on determinuje też aktualny stan, window.title, przyciąganie alert-a itd.
+
+No to ten onblur czy cośtam - to powinien działać przy przejściu z karty na kartę tego samego wspólnego widoku?
+
+W History API jest state. pytanie: czego to jest state? Czego to jest stan? po prostu strony? jak dostanę tą nazwę, to będę mógł mówić karty wspólnej x(strony?)/wiele kart wspólnej x(strony?).
+
+Co z tym samym adresem w kilku kartach? albo dokładnie to samo, albo w jednym oderwane a w drugim nie oderwane? A, może żeby "poza" kontekstem powinny być tam z własnym stanem? albo nie otwierać dwóch takich samych adresów? (zamiast tego mrygnąć już wcześniej otwartą karta?). czasami ktoś chciałby mieć dwa te same adresy, które są tym samym ale np. jedno ma trochę wyżej scrollbar. to by trzeba uwzględniać i rozdzielać.
