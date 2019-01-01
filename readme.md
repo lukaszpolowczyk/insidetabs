@@ -88,10 +88,10 @@ Clicking the tab switches the common page view,  for that tab and executes the i
 Na przykładzie są `cztery` karty i odpowiednio `cztery` strony.  
 Każda karta ma własną stronę (widok, DOM itd.).  
 
-Przełączenie z karty "Simple Text" na "Gallery 3" powoduje przełączenie widoku.  
+Przełączenie z karty "Simple Text" na "Gallery - 3" powoduje przełączenie widoku.  
 ![Two pages](two-pages.gif)
 
-Przełączenie z "Gallery 3" na "Gallery 4" również przełącza widok, mimo, że widoki niewiele się od siebie różnią.  
+Przełączenie z "Gallery - 3" na "Gallery - 4" również przełącza widok, mimo, że widoki niewiele się od siebie różnią.  
 Są to (niemal) te same strony, tylko w osobnych instancjach.  
 ![Separate pages](separate-pages.gif)
 
@@ -103,12 +103,12 @@ Są to (niemal) te same strony, tylko w osobnych instancjach.
 Na przykładzie są `cztery` karty i tylko `trzy` strony.  
 Druga i trzecia karta odnosi się do tej samej, wspólnej strony.  
 
-Przełączenie z karty "Simple Text" na "Gallery 3" powoduje przełączenie widoku.  
+Przełączenie z karty "Simple Text" na "Gallery - 3" powoduje przełączenie widoku.  
 ![Two pages](cpi-two-pages.gif)
 
 
-Przełączenie z "Gallery 3" na "Gallery 4" nie powoduje przełączenia widoku.  
-Jedyne co się dzieje, to odpalenie wewnętrznego skryptu we pojedynczej wspólnej stronie, który podmienia obrazek i przesuwa obramowanie miniaturki.  
+Przełączenie z "Gallery - 3" na "Gallery - 4" nie powoduje przełączenia widoku.  
+Jedyne co się dzieje, to odpalenie wewnętrznego skryptu w pojedynczej wspólnej stronie, który podmienia obrazek i przesuwa obramowanie miniaturki.  
 Tak właśnie ma działać Common Page Instance API.
 ![Common page](cpi-common-page.gif)
 
