@@ -26,8 +26,12 @@
 
 .browser-window {
 	--browser-width: 700px;
+	--pages-count: 3;
 	width: var(--browser-width);
 	grid-area: browser-window;
+}
+.browser-window[classic-tabs] {
+	--pages-count: 4;
 }
 .state-description {
 	grid-area: state-description;
@@ -76,7 +80,7 @@ body {
 
 .view {
 	--active-view-width: 260px;
-	--ot-width: calc(var(--browser-width) / 3);
+	--ot-width: calc(var(--browser-width) / var(--pages-count));
 	--in-background-view-width: calc(var(--active-view-width)/2);
 	margin: 0/*10px 5px*/;
 	padding: 0/*10px 25px*/;
@@ -99,6 +103,11 @@ body {
 .view[view-id="3"] {
 	left: 100px;
 	left: calc(var(--ot-width) * 3 - var(--ot-width) / 2 - var(--in-background-view-width) / 2);
+}
+
+.view[view-id="4"] {
+	left: 100px;
+	left: calc(var(--ot-width) * 4 - var(--ot-width) / 2 - var(--in-background-view-width) / 2);
 }
 
 /*.description {

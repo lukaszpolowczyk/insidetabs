@@ -72,35 +72,45 @@ window.addEventListener("parallelstate", (event)=>{
 });
 ```
 
-Clicking the tab switches the common page view,  for that tab and.
-
-Ustawiony nasłuch
+Clicking the tab switches the common page view,  for that tab and executes the internal script to slightly change the content of the page state.
 
 
-### Other APIs
-
-Przepoczwarzenie strony samodzielnej w kartę wspólnej instancji strony.  
-Instancja jest jedna na okno przeglądarki, ale czy jest możliwe wiele wspólnych instancji tej samej domeny, dla jednego okna przeglądarki? 
-
-## **Example**
-
-### **Jak jest teraz**
+### Other related APIs
 
 (...)
 
 
-### **Jak będzie z API**
+## **Examples**
+
+### **Jak jest teraz**
+
+[Live Demo](index2.html)
+
+Na przykładzie są `cztery` karty i odpowiednio `cztery` strony.  
+Każda karta ma własną stronę (widok, DOM itd.).  
+
+Przełączenie z karty "Simple Text" na "Gallery 3" powoduje przełączenie widoku.  
+![Two pages](two-pages.gif)
+
+Przełączenie z "Gallery 3" na "Gallery 4" również przełącza widok.  
+Mimo, że widoki niewiele się od siebie różnią. Są to (niemal) te same strony, tylko w osobnych instancjach.  
+![Separate pages](separate-pages.gif)
+
+
+### **Jak będzie z Common Page Instance API**
 
 [Live Demo](index.html)
 
 Na przykładzie są `cztery` karty i tylko `trzy` strony.  
 Druga i trzecia karta odnosi się do tej samej, wspólnej strony.  
+
 Przełączenie z karty "Simple Text" na "Gallery 3" powoduje przełączenie widoku.  
 ![Two pages](cpi-two-pages.gif)
 
 
 Przełączenie z "Gallery 3" na "Gallery 4" nie powoduje przełączenia widoku.  
-Jedyne co się dzieje, to odpalenie wewnętrznego skryptu w drugiej stronie, który podmienia obrazek i przesuwa obramowanie miniaturki.  
+Jedyne co się dzieje, to odpalenie wewnętrznego skryptu we pojedynczej wspólnej stronie, który podmienia obrazek i przesuwa obramowanie miniaturki.  
+Tak właśnie ma działać Common Page Instance API.
 ![Common page](cpi-common-page.gif)
 
 Są to jakby karty wewnętrzne wspólnej instancji strony, tyle że umiejscowione na pasku kart przeglądarki.
@@ -110,11 +120,29 @@ Skrypt wewnątrz strony jest ten sam, co przy przełączaniu między miniaturkam
 
 ## **Benefits**
 
-* Pozbycie się duplikowania strony w wielu kartach(?)
+Zalety w większości pokrywają się z zaletami History API.
+
+Karty wspólnej instancji strony:
+
+* Zajmują mniej miejsca niż kilka niemal takich samych stron.
+* Zużyją mniej procesowa niż zduplikowane w kilku kartach skrypty .(typu sprawdzanie powiadomień, czas na Facebooku).
+* Zużyją mniej transferu Internetu i szybciej się pobiorą.
+* Szybciej się uruchomią.
+* Dadzą sprawniejsze przełączanie się między kartami.
+* Mają doskonałą synchronizację między sobą.
+* (...)
 
 
-## **Additional API**
 
 ## **Problems, doubts, explanations**
 
 * The names `parallelstate`, `beforeparallelstate` are debatable.
+* Potrzeba dopasowania do wielu już istniejących API, np. Page Visibility API.
+* (...)
+
+
+## **Inne rozwiązania**
+
+* konieczność dostosowania się do nowego API - nie ma takiej konieczności. można wymiennie i nawet jednocześnie z poziomu tej samej strony, wedle potrzeb, używać i standardowego rozwiązania i Tabs API. Dla użytkownika powinno to być w zasadzie niezauważalne (nie licząc braku korzyści z używania Tabs API) ani utrudniać procesu dewelopingu.
+* Cache API jako optymalizacja ładowania strony? W porównaniu do Tabs API jest o wiele gorsze bo Tabs API nie musi przetwarzać ponownie całej strony. oraz spełnia częściowo inne funkcje.
+* Message API do synchronizacji? Raczej nieporównywalnie gorsze i bardziej skomplikowane rozwiązanie.
