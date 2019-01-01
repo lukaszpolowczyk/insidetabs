@@ -140,7 +140,7 @@ Karty wspólnej instancji strony:
 * (...)
 
 
-## **Inne rozwiązania**
+## **Alternatywne istniejące rozwiązania**
 
 * konieczność dostosowania się do nowego API - nie ma takiej konieczności. można wymiennie i nawet jednocześnie z poziomu tej samej strony, wedle potrzeb, używać i standardowego rozwiązania i Tabs API. Dla użytkownika powinno to być w zasadzie niezauważalne (nie licząc braku korzyści z używania Tabs API) ani utrudniać procesu dewelopingu.
 * Cache API jako optymalizacja ładowania strony? W porównaniu do Tabs API jest o wiele gorsze bo Tabs API nie musi przetwarzać ponownie całej strony. oraz spełnia częściowo inne funkcje.
