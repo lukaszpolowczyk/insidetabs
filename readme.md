@@ -91,8 +91,8 @@ Każda karta ma własną stronę (widok, DOM itd.).
 Przełączenie z karty "Simple Text" na "Gallery 3" powoduje przełączenie widoku.  
 ![Two pages](two-pages.gif)
 
-Przełączenie z "Gallery 3" na "Gallery 4" również przełącza widok.  
-Mimo, że widoki niewiele się od siebie różnią. Są to (niemal) te same strony, tylko w osobnych instancjach.  
+Przełączenie z "Gallery 3" na "Gallery 4" również przełącza widok, mimo, że widoki niewiele się od siebie różnią.  
+Są to (niemal) te same strony, tylko w osobnych instancjach.  
 ![Separate pages](separate-pages.gif)
 
 
