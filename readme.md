@@ -84,7 +84,6 @@ Clicking the tab switches the common page view,  for that tab and executes the i
 
 ### **Jak jest teraz**
 
-[Live Demo](index2.html)
 
 Na przykładzie są `cztery` karty i odpowiednio `cztery` strony.  
 Każda karta ma własną stronę (widok, DOM itd.).  
@@ -99,7 +98,7 @@ Mimo, że widoki niewiele się od siebie różnią. Są to (niemal) te same stro
 
 ### **Jak będzie z Common Page Instance API**
 
-[Live Demo](index.html)
+[Live Demo](http://htmlpreview.github.io/?https://github.com/lukaszpolowczyk/insidetabs/blob/master/index.html)
 
 Na przykładzie są `cztery` karty i tylko `trzy` strony.  
 Druga i trzecia karta odnosi się do tej samej, wspólnej strony.  
