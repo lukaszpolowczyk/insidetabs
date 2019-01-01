@@ -12,52 +12,48 @@
 			<div class="browser-tabs">
 				<div style="margin-right: 20px"> Browser tabs: </div>
 				<div class="tab">
-					<input class="tab-input" checked="" type="radio" name="tab" url="https://it-simple.com" id="tab1" reset for-view="1"             ><label class="tab-label" for="tab1">Simple Text</label>
+					<input class="tab-input" checked="" type="radio" name="tab" url="https://ex-simple.com" id="tab1" reset for-view="1"             ><label class="tab-label" for="tab1">Simple Text</label>
 				</div>
 				<div class="tab">
-						<input class="tab-input" type="radio" name="tab" url="https://it-gallery.com/3" id="tab2" reset for-view="2" context="3" ><label class="tab-label" for="tab2">Gallery - 3</label>
+						<input class="tab-input" type="radio" name="tab" url="https://ex-gallery.com/3" id="tab2" reset for-view="2" context="3" ><label class="tab-label" for="tab2">Gallery - 3</label>
 					
 				</div>
 				<div class="tab">
-					<input class="tab-input" type="radio" name="tab" url="https://it-gallery.com/4" id="tab3" reset for-view="2" context="4" ><label class="tab-label" for="tab3">Gallery - 4</label>
+					<input class="tab-input" type="radio" name="tab" url="https://ex-gallery.com/4" id="tab3" reset for-view="2" context="4" ><label class="tab-label" for="tab3">Gallery - 4</label>
 				</div>
 				<div class="tab">
-						<input class="tab-input" type="radio" name="tab" url="https://it-withsidebar.com" id="tab4" reset for-view="3"             ><label class="tab-label" for="tab4">Text with Sidebar</label>
+						<input class="tab-input" type="radio" name="tab" url="https://ex-withsidebar.com" id="tab4" reset for-view="3"             ><label class="tab-label" for="tab4">Text with Sidebar</label>
 				</div>
 				
 			</div>
-			<div>View URL: <span class="tab-url"></span></div>
+			<div class="nav-bar">
+				<img src="back-b.png" alt="">
+				<img src="forward-b.png" alt="">
+				<img src="reload-b.png" alt="">
+				<span class="tab-url"></span></div>
 		</div>
-		<div class="views">
-			<div class="view" view-id="1">
-				<div class="visible-text">Visible view</div>
-				<div class="background-text">In background view</div>
-				<img class="view-img" src="placeholders/placeholder-simple-text.png" alt="" srcset="">
-				<div class="description"></div>
-			</div>
-			<div class="view" view-id="2">
-				<div class="visible-text">Visible view</div>
-				<div class="background-text">In background view</div>
-				<map name="thumbs">
-					<area class="thumb gall1" number="1" shape="rect" coords="25, 153, 63, 189" title="Click to switch image">
-					<area class="thumb gall2" number="2" shape="rect" coords="77, 153, 115, 189" title="Click to switch image">
-					<area class="thumb gall3" number="3" shape="rect" coords="136, 153, 174, 189" title="Click to switch image">
-					<area class="thumb gall4" number="4" shape="rect" coords="189, 153, 227, 189" title="Click to switch image">
-					</map>
-				<img class="view-img" usemap="#thumbs" src="placeholders/placeholder-gallery-selected-3.png" alt="" srcset="">
-				
-				<div class="description">
+		<div class="browser-view">
+			<div class="views">
+				<div class="view" view-id="1">
+					<img class="view-img" src="placeholders/placeholder-simple-text.png" alt="" srcset="">
 				</div>
-			</div>
-			<div class="view" view-id="3">
-				<div class="visible-text">Visible view</div>
-				<div class="background-text">In background view</div>
-				<img class="view-img" src="placeholders/placeholder-sidebar-and-text.png" alt="" srcset="">
-				<div class="description"></div>
+				<div class="view" view-id="2">
+					<map name="thumbs">
+						<area class="thumb gall1" number="1" shape="rect" coords="25, 153, 63, 189" title="Click to switch image">
+						<area class="thumb gall2" number="2" shape="rect" coords="77, 153, 115, 189" title="Click to switch image">
+						<area class="thumb gall3" number="3" shape="rect" coords="136, 153, 174, 189" title="Click to switch image">
+						<area class="thumb gall4" number="4" shape="rect" coords="189, 153, 227, 189" title="Click to switch image">
+						</map>
+					<img class="view-img" usemap="#thumbs" src="placeholders/placeholder-gallery-selected-3.png" alt="" srcset="">
+					
+				</div>
+				<div class="view" view-id="3">
+					<img class="view-img" src="placeholders/placeholder-sidebar-and-text.png" alt="" srcset="">
 			</div>
 		</div>
+		
 	</div>
-	<div class="state-description">
+	<div class="state-description" style="display: none;">
 		One view for two tabs.<br/>
 		Second view is common for two tabs.<br/>
 		The two tabs refer to one instance (view, DOM, CSSOM etc.) of the page.
@@ -96,6 +92,8 @@
 			
 			inputEl.nextElementSibling.textContent = `Gallery - ${number}`;
 			inputEl.setAttribute("context", `${number}`);
+			inputEl.setAttribute("url", `https://ex-gallery.com/${inputEl.getAttribute("context")}`);
+			document.querySelector(".tab-url").textContent = `https://ex-gallery.com/${inputEl.getAttribute("context")}`;
 			const activeViewEl = document.querySelector(`.view[view-id="${inputEl.getAttribute("for-view")}"]`);
 			activeViewEl.querySelector("img").src = `placeholders/placeholder-gallery-selected-${inputEl.getAttribute("context")}.png`;
 			console.log("number", number);
