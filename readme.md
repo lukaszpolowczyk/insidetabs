@@ -98,7 +98,7 @@ Są to (niemal) te same strony, tylko w osobnych instancjach.
 
 ### **Jak będzie z Common Page Instance API**
 
-[Live Demo](http://htmlpreview.github.io/?https://github.com/lukaszpolowczyk/insidetabs/blob/master/index.html)
+[Live Demo](https://lukaszpolowczyk.github.io/insidetabs/index2.html)
 
 Na przykładzie są `cztery` karty i tylko `trzy` strony.  
 Druga i trzecia karta odnosi się do tej samej, wspólnej strony.  
